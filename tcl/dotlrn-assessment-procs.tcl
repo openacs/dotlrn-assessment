@@ -29,7 +29,7 @@ ad_proc -public dotlrn_assessment::my_package_key {} {
 ad_proc -public dotlrn_assessment::get_pretty_name {} {
     returns the pretty name
 } {
-    return "Assessment Applet"
+    return "[_ assessment.Applet]"
 }
 
 ad_proc -public dotlrn_assessment::add_applet {} {
