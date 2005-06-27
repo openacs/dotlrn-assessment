@@ -3,14 +3,6 @@
 <queryset>
 <rdbms><type>postgresql</type><version>7.1</version></rdbms>
 
-<fullquery name="dotlrn_assessment::clone.call_assessment_clone">
-  <querytext>
-    select assessment__clone ( 
-        :old_package_id,
-        :new_package_id
-      );
-  </querytext>
-</fullquery>
 
 <fullquery name="dotlrn_assessment::remove_applet.delete_applet_from_communities">
   <querytext>

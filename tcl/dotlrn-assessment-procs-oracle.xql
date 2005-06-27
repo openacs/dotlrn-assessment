@@ -3,14 +3,6 @@
 <queryset>
 <rdbms><type>oracle</type><version>8.1.6</version></rdbms>
 
-<fullquery name="dotlrn_assessment::clone.call_assessment_clone">
-  <querytext>
-    select assessment.clone ( 
-        :old_package_id,
-        :new_package_id
-      );
-  </querytext>
-</fullquery>
 
 <fullquery name="dotlrn_assessment::remove_applet.delete_applet_from_communities">
   <querytext>
