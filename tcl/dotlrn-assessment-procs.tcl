@@ -183,7 +183,13 @@ ad_proc -public dotlrn_assessment::clone {
                             -applet_key [applet_key]
                        ]
 
-    db_exec_plsql call_assessment_clone {}
+    set folder_id [as::assessment::folder_id -package_id $new_package_id]
+    
+    set assessments [db_list_of_lists get_assessments {}]
+    
+    foreach assessment $assessments {
+	dotlrn_assessment::assessment_copy -assessment_id [lindex $assessment 0] -name [lindex $assessment 1] -folder_id $folder_id
+    }
     return $new_package_id
 }
 
@@ -196,3 +202,58 @@ ad_proc -public dotlrn_assessment::change_event_handler {
     listens for the following events: 
 } { 
 }   
+
+ad_proc -public dotlrn_assessment::assessment_copy {
+    {-assessment_id:required}
+    {-name ""}
+    {-folder_id}
+} {
+    @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
+    @creation-date 2005-06-27
+
+    Copies an assessment with all sections and items
+} {
+    as::assessment::data -assessment_id $assessment_id
+    array set a [array get assessment_data]
+    append a(title) "[_ assessment.copy_appendix]"
+    
+    
+    set new_assessment_id [db_nextval acs_object_id_seq]
+    if {[empty_string_p $name]} {
+	set name "ASS_$new_assessment_id"
+    }
+    set new_assessment_id [content::item::new -item_id $new_assessment_id -parent_id $folder_id -content_type {as_assessments} -name $name]
+    
+    set new_rev_id [content::revision::new \
+			-item_id $new_assessment_id \
+			-content_type {as_assessments} \
+			-title $a(title) \
+			-description $a(description) \
+			-attributes [list [list creator_id $a(creator_id)] \
+					 [list instructions $a(instructions)] \
+					 [list run_mode $a(run_mode)] \
+					 [list anonymous_p $a(anonymous_p)] \
+					 [list secure_access_p $a(secure_access_p)] \
+					 [list reuse_responses_p $a(reuse_responses_p)] \
+					 [list show_item_name_p $a(show_item_name_p)] \
+					 [list random_p $a(random_p)] \
+					 [list entry_page $a(entry_page)] \
+					 [list exit_page $a(exit_page)] \
+					 [list consent_page $a(consent_page)] \
+					 [list return_url $a(return_url)] \
+					 [list start_time $a(start_time)] \
+					 [list end_time $a(end_time)] \
+					 [list number_tries $a(number_tries)] \
+					 [list wait_between_tries $a(wait_between_tries)] \
+					 [list time_for_response $a(time_for_response)] \
+					 [list ip_mask $a(ip_mask)] \
+					 [list password $a(password)] \
+					 [list show_feedback $a(show_feedback)] \
+					 [list section_navigation $a(section_navigation)] ] ]
+    
+    as::assessment::copy_sections -assessment_id $a(assessment_rev_id) -new_assessment_id $new_rev_id
+    as::assessment::copy_categories -from_id $a(assessment_rev_id) -to_id $new_rev_id
+    
+    
+    return $new_assessment_id
+}
