@@ -1,7 +1,6 @@
 <?Xml version="1.0"?>
 
 <queryset>
-<rdbms><type>oracle</type><version>8.1.6</version></rdbms>
 
 <fullquery name="dotlrn_assessment::clone.get_assessments">
   <querytext>
