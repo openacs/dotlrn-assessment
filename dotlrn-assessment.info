@@ -12,8 +12,8 @@
         <release-date>2006-12-02</release-date>
 
         <provides url="dotlrn-assessment" version="2.2.1a1"/>
-        <requires url="dotlrn" version="1.0"/>
-        <requires url="assessment-portlet" version="0.1d"/>
+        <requires url="dotlrn" version="2.2.1a1"/>
+        <requires url="assessment-portlet" version="2.2.1a1"/>
 
         <callbacks>
             <callback type="before-uninstall"  proc="dotlrn_assessment::uninstall"/>
