@@ -219,7 +219,7 @@ ad_proc -public dotlrn_assessment::assessment_copy {
     
     
     set new_assessment_id [db_nextval acs_object_id_seq]
-    if {[empty_string_p $name]} {
+    if {$name eq ""} {
 	set name "ASS_$new_assessment_id"
     }
     set new_assessment_id [content::item::new -item_id $new_assessment_id -parent_id $folder_id -content_type {as_assessments} -name $name]
