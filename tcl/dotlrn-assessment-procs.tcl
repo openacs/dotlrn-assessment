@@ -3,7 +3,7 @@ ad_library {
     Procs to set up the dotLRN assessment applet
     
     @author jopez@galileo.edu
-    @cvs_id $Id$
+    @cvs-id $Id$
 }
 
 namespace eval dotlrn_assessment {}
