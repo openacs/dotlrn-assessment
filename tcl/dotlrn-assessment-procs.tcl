@@ -206,10 +206,10 @@ ad_proc -public dotlrn_assessment::assessment_copy {
     {-name ""}
     {-folder_id}
 } {
+    Copies an assessment with all sections and items
+
     @author Anny Flores (annyflores@viaro.net) Viaro Networks (www.viaro.net)
     @creation-date 2005-06-27
-
-    Copies an assessment with all sections and items
 } {
     as::assessment::data -assessment_id $assessment_id
     array set a [array get assessment_data]
